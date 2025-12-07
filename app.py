@@ -55,15 +55,6 @@ city = col2.selectbox('Select City', ['Ahmedabad', 'Aizawl', 'Amaravati', 'Amrit
        'Visakhapatnam'])
 
 date = col2.date_input('Select Date')
-year = date.year
-month = date.month
-day = date.day
-
-# Cyclic encodings
-month_sin = np.sin(2 * np.pi * month / 12)
-month_cos = np.cos(2 * np.pi * month / 12)
-day_sin = np.sin(2 * np.pi * day / 31)
-day_cos = np.cos(2 * np.pi * day / 31)
 
 # POLLUTANTS
 pollutants = ['PM2.5','PM10','NO','NO2','NOx','NH3','CO','SO2','O3','Benzene','Toluene','Xylene']
@@ -72,7 +63,18 @@ pollutant_values = {}
 for p in pollutants:
     pollutant_values[p] = col2.number_input(f"Enter {p} value", min_value=0.0)
 
-input_data = pd.DataFrame([{
+if col2.button("Predict"):
+    year = date.year
+    month = date.month
+    day = date.day
+    
+    # Cyclic encodings
+    month_sin = np.sin(2 * np.pi * month / 12)
+    month_cos = np.cos(2 * np.pi * month / 12)
+    day_sin = np.sin(2 * np.pi * day / 31)
+    day_cos = np.cos(2 * np.pi * day / 31)
+    
+    input_data = pd.DataFrame([{
     "City": city,
     "year": year,
     "month_sin": month_sin,
@@ -81,18 +83,16 @@ input_data = pd.DataFrame([{
     "day_cos": day_cos,
     **pollutant_values}])
 
-if col2.button("Predict"):
-
     # Predict AQI
     predicted_aqi = aqi_model.predict(input_data)[0]
-
+    
     # Add predicted AQI into features for bucket model
     input_data["AQI"] = predicted_aqi
-
+    
     # Predict AQI Bucket
     predicted_bucket = bucket_model.predict(input_data)[0]
     predicted_bucket_label = bucket_encoder.inverse_transform([predicted_bucket])[0]
-
+    
     # Show results
     col2.success(f"Predicted AQI: {predicted_aqi:.2f}")
     col2.info(f"Predicted AQI Bucket: **{predicted_bucket_label}**")
