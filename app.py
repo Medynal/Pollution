@@ -86,13 +86,6 @@ if col2.button("Predict"):
     # Predict AQI
     predicted_aqi = aqi_model.predict(input_data)[0]
     
-    # Add predicted AQI into features for bucket model
-    input_data["AQI"] = predicted_aqi
-    
-    # Predict AQI Bucket
-    predicted_bucket = bucket_model.predict(input_data)[0]
-    predicted_bucket_label = bucket_encoder.inverse_transform([predicted_bucket])[0]
-    
     # Show results
     col2.success(f"Predicted AQI: {predicted_aqi:.2f}")
     col2.info(f"Predicted AQI Bucket: **{predicted_bucket_label}**")
