@@ -71,18 +71,25 @@ if col2.button("Predict"):
     # Cyclic encodings
     month_sin = np.sin(2 * np.pi * month / 12)
     month_cos = np.cos(2 * np.pi * month / 12)
-    day_sin = np.sin(2 * np.pi * day / 31)
-    day_cos = np.cos(2 * np.pi * day / 31)
+    day_sin = np.sin(2 * np.pi * day / 7)
+    day_cos = np.cos(2 * np.pi * day / 7)
     
-    input_data = pd.DataFrame([{
+    expected_columns = ["City","year","month_sin","month_cos","day_sin","day_cos",
+    'PM2.5','PM10','NO','NO2','NOx','NH3','CO','SO2','O3',
+    'Benzene','Toluene','Xylene']
+    
+    data_dict = {
     "City": city,
     "year": year,
     "month_sin": month_sin,
     "month_cos": month_cos,
     "day_sin": day_sin,
     "day_cos": day_cos,
-    **pollutant_values}])
-
+    **pollutant_values}
+    
+    input_data = pd.DataFrame([[data_dict[col] for col in expected_columns]], 
+                           columns=expected_columns)
+    
     # Predict AQI
     predicted_aqi = aqi_model.predict(input_data)[0]
     
