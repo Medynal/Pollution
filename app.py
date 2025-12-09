@@ -25,8 +25,8 @@ col2, col3 = st.columns((2,1))
 #loading Models
 @st.cache_resource
 def load_models():
-    aqi_model = joblib.load('aqi_regressor.pkl')
-    bucket_model = joblib.load('aqib_classifier.pkl')
+    bucket_model = joblib.load('aqi_regressor.pkl')
+    aqi_model = joblib.load('aqib_classifier.pkl')
     bucket_encoder = joblib.load("bucket_encoder.pkl")
     return aqi_model, bucket_model, bucket_encoder
 
