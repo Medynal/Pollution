@@ -1,12 +1,3 @@
-import streamlit as st
-import pandas as pd
-import numpy as np
-import joblib
-from datetime import datetime
-from PIL import Image
-import plotly.express as px
-import os
-
 #Page configuration
 st.set_page_config(page_title='AQI & AQI Bucket Predictor', layout='wide')
 
