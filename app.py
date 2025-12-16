@@ -40,7 +40,7 @@ with st.sidebar:
         This application provides:
         - Air quality insights in major cities in India  
         - Interactive exploratory analysis  
-        - AQI and AQI-Bucket prediction)
+        - AQI and AQI-Bucket prediction""")
 
 # Load Dataset
 
