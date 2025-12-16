@@ -21,8 +21,8 @@ st.set_page_config(
 
 # Header Image (Top of App)
 
-image = Image.open("images/banner.jpeg")
-st.image(image, use_container_width=True)
+image = Image.open("images.jpeg")
+st.image(image)
 
 st.title("Air Quality Analytics & Prediction System")
 
