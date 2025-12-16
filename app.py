@@ -22,7 +22,8 @@ st.set_page_config(
 # Header Image (Top of App)
 
 image = Image.open("images.jpeg")
-st.image(image, width=True)
+image= image.resize(1200,500)
+st.image(image)
 
 st.title("Air Quality Analytics & Prediction System")
 
@@ -30,6 +31,16 @@ st.title("Air Quality Analytics & Prediction System")
 section = st.sidebar.radio(
     "Navigate",
     ["Data Overview", "Exploratory Data Analysis (EDA)", "Modelling & Prediction"])
+
+with st.sidebar:
+    st.markdown("### About This App")
+    st.markdown(
+        """
+        **Air Quality Analytics Platform**  
+        This application provides:
+        - Air quality insights in major cities in India  
+        - Interactive exploratory analysis  
+        - AQI and AQI-Bucket prediction)
 
 # Load Dataset
 
@@ -64,7 +75,7 @@ if section == "Data Overview":
         st.write("Cities Covered:", df["City"].nunique())
 
     st.subheader("Sample Records")
-    st.dataframe(df.head())
+    st.dataframe(df.head(100))
 
 # SECTION 2 : EPLORATORY DATA ANALYSIS
 elif section == "Exploratory Data Analysis (EDA)":
