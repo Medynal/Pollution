@@ -21,8 +21,7 @@ def load_models():
 def show_modelling():
 
     st.header("AQI Modelling and Prediction")
-
-    df = load_data()
+    
     aqi_model, bucket_model, bucket_encoder = load_models()
 
     col1, col2 = st.columns(2)
