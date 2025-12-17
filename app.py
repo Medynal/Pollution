@@ -68,16 +68,40 @@ if section == "Data Overview":
 
     with col1:
         st.subheader("Basic Information")
-        st.markdown("""The dataset contains air quality observations from different cities in India. The observation was collected over multiple years (2015-2020) , focusing on key atmospheric pollutants commonly used to assess environmental and public health risks.
-                   Key pollutants in the dataset include particulate matter (PM2.5 and PM10), gaseous pollutants such as nitrogen oxides (NO, NO₂, NOx), sulphur dioxide (SO₂), carbon monoxide (CO), ozone (O₃), and volatile organic compounds including benzene, toluene, and xylene. 
-                   These pollutants are widely recognised indicators of urban air quality and are linked to respiratory and cardiovascular health outcomes.""")
+        st.markdown("""
+                        The dataset contains air quality observations from multiple cities in India.  
+                        These observations were collected over several years **(2015–2020)** and focus on
+                        key atmospheric pollutants commonly used to assess environmental and public health risks.
+                    
+                        ### Key Pollutants Covered
+                        - **Particulate Matter:** PM2.5, PM10  
+                        - **Nitrogen Compounds:** NO, NO₂, NOx  
+                        - **Gaseous Pollutants:** SO₂, CO, O₃  
+                        - **Volatile Organic Compounds (VOCs):** Benzene, Toluene, Xylene
+                        """)
 
         st.write(f"Number of Records: {df.shape[0]}")
         st.write(f"Number of Features: {df.shape[1]}")
-        st.write("Cities Covered:", df["City"].unique())
-
-    st.subheader("Sample Records")
-    st.dataframe(df.head(100))
+        
+        cities = ["All Cities"] + sorted(df["City"].unique())
+    
+        selected_city = st.radio(
+        "Select City",
+        cities,
+        horizontal=True)
+    
+        st.subheader("Sample Records")
+    
+        if selected_city == "All Cities":
+            filtered_df = df
+            st.write("Showing dataset for **all cities**")
+        else:
+            filtered_df = df[df["City"] == selected_city]
+            st.write(
+                f"Showing dataset for **{selected_city}** "
+                f"({filtered_df.shape[0]} records)")
+        
+        st.dataframe(filtered_df.head(100), use_container_width=True)
 
 # SECTION 2 : EPLORATORY DATA ANALYSIS
 elif section == "Exploratory Data Analysis (EDA)":
