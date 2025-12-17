@@ -63,45 +63,41 @@ aqi_model, bucket_model, bucket_encoder = load_models()
 if section == "Data Overview":
 
     st.header("Dataset Overview")
+    st.subheader("Basic Information")
+    st.markdown("""
+                    The dataset contains air quality observations from multiple cities in India.  
+                    These observations were collected over several years **(2015–2020)** and focus on
+                    key atmospheric pollutants commonly used to assess environmental and public health risks.
+                
+                    ### Key Pollutants Covered
+                    - **Particulate Matter:** PM2.5, PM10  
+                    - **Nitrogen Compounds:** NO, NO₂, NOx  
+                    - **Gaseous Pollutants:** SO₂, CO, O₃  
+                    - **Volatile Organic Compounds (VOCs):** Benzene, Toluene, Xylene
+                    """)
 
-    col1, col2 = st.columns(2)
+    st.write(f"Number of Records: {df.shape[0]}")
+    st.write(f"Number of Features: {df.shape[1]}")
+    
+    cities = ["All Cities"] + sorted(df["City"].unique())
 
-    with col1:
-        st.subheader("Basic Information")
-        st.markdown("""
-                        The dataset contains air quality observations from multiple cities in India.  
-                        These observations were collected over several years **(2015–2020)** and focus on
-                        key atmospheric pollutants commonly used to assess environmental and public health risks.
-                    
-                        ### Key Pollutants Covered
-                        - **Particulate Matter:** PM2.5, PM10  
-                        - **Nitrogen Compounds:** NO, NO₂, NOx  
-                        - **Gaseous Pollutants:** SO₂, CO, O₃  
-                        - **Volatile Organic Compounds (VOCs):** Benzene, Toluene, Xylene
-                        """)
+    selected_city = st.radio(
+    "Select City",
+    cities,
+    horizontal=True)
 
-        st.write(f"Number of Records: {df.shape[0]}")
-        st.write(f"Number of Features: {df.shape[1]}")
-        
-        cities = ["All Cities"] + sorted(df["City"].unique())
+    st.subheader("Sample Records")
+
+    if selected_city == "All Cities":
+        filtered_df = df
+        st.write("Showing dataset for **all cities**")
+    else:
+        filtered_df = df[df["City"] == selected_city]
+        st.write(
+            f"Showing dataset for **{selected_city}** "
+            f"({filtered_df.shape[0]} records)")
     
-        selected_city = st.radio(
-        "Select City",
-        cities,
-        horizontal=True)
-    
-        st.subheader("Sample Records")
-    
-        if selected_city == "All Cities":
-            filtered_df = df
-            st.write("Showing dataset for **all cities**")
-        else:
-            filtered_df = df[df["City"] == selected_city]
-            st.write(
-                f"Showing dataset for **{selected_city}** "
-                f"({filtered_df.shape[0]} records)")
-        
-        st.dataframe(filtered_df.head(100), use_container_width=True)
+    st.dataframe(filtered_df.head(100), use_container_width=True)
 
 # SECTION 2 : EPLORATORY DATA ANALYSIS
 elif section == "Exploratory Data Analysis (EDA)":
