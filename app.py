@@ -222,6 +222,7 @@ elif section == "Exploratory Data Analysis (EDA)":
 elif section == "Modelling & Prediction":
 
     st.header("AQI Modelling and Prediction")
+    st.subheader ("Input all features to predict AQI and AQI bucket")
 
     col1, col2 = st.columns(2)
 
