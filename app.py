@@ -68,9 +68,9 @@ if section == "Data Overview":
 
     with col1:
         st.subheader("Basic Information")
-        st.write("The dataset contains air quality observations from different cities in India. The observation was collected over multiple years (2015-2020) , focusing on key atmospheric pollutants commonly used to assess environmental and public health risks.
+        st.markdown("""The dataset contains air quality observations from different cities in India. The observation was collected over multiple years (2015-2020) , focusing on key atmospheric pollutants commonly used to assess environmental and public health risks.
                    Key pollutants in the dataset include particulate matter (PM2.5 and PM10), gaseous pollutants such as nitrogen oxides (NO, NO₂, NOx), sulphur dioxide (SO₂), carbon monoxide (CO), ozone (O₃), and volatile organic compounds including benzene, toluene, and xylene. 
-                   These pollutants are widely recognised indicators of urban air quality and are linked to respiratory and cardiovascular health outcomes.")
+                   These pollutants are widely recognised indicators of urban air quality and are linked to respiratory and cardiovascular health outcomes.""")
 
         st.write(f"Number of Records: {df.shape[0]}")
         st.write(f"Number of Features: {df.shape[1]}")
